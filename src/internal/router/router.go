@@ -12,6 +12,7 @@ func Initialize(db *gorm.DB, env *configs.Env) error {
 	router := gin.Default()
 
 	authRoutes(router, db, env)
+	userRoutes(router, db, env)
 
 	if err := router.Run("0.0.0.0:" + env.Port); err != nil {
 		return err
@@ -25,5 +26,14 @@ func authRoutes(router *gin.Engine, db *gorm.DB, env *configs.Env) {
 	authGroup := router.Group("")
 	{
 		authGroup.POST("/sign-in", authService.Login)
+	}
+}
+
+func userRoutes(router *gin.Engine, db *gorm.DB, env *configs.Env) {
+	userService := service.NewUserService(db, env)
+
+	userGroup := router.Group("users")
+	{
+		userGroup.POST("/create", userService.CreateUser)
 	}
 }

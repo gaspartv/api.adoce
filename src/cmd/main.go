@@ -3,7 +3,6 @@ package main
 import (
 	"gaspartv/api.adoce/src/configs"
 	"gaspartv/api.adoce/src/internal/database"
-	"gaspartv/api.adoce/src/internal/router"
 )
 
 func main() {
@@ -16,8 +15,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 
-	if err := router.Initialize(db, env); err != nil {
-		panic(err)
-	}
+	// if err := router.Initialize(db, env); err != nil {
+	// 	panic(err)
+	// }
 }

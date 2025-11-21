@@ -10,6 +10,7 @@ import (
 type Env struct {
 	Port        string `validate:"required"`
 	DatabaseURL string `validate:"required"`
+	BcryptSalt  string `validate:"required"`
 }
 
 func ValidateEnv() (*Env, error) {
@@ -20,6 +21,7 @@ func ValidateEnv() (*Env, error) {
 	var env Env
 	env.Port = os.Getenv("PORT")
 	env.DatabaseURL = os.Getenv("DATABASE_URL")
+	env.BcryptSalt = os.Getenv("BCRYPT_SALT")
 
 	validate := validator.New()
 	if err := validate.Struct(env); err != nil {
